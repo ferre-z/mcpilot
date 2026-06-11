@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * `mcpilot` — top-level CLI entry. Uses commander for parsing.
  *
@@ -26,7 +27,7 @@ program
   .option('--cwd <path>', 'working directory to scan for .mcp.json', process.cwd())
   .option('--home <path>', 'override $HOME for the scanner')
   .option('--json', 'emit machine-readable JSON')
-  .action(async (opts: { cwd?: string; home?: string; json?: boolean }) => {
+  .action(async (opts) => {
     try {
       await scanCommand({ cwd: opts.cwd, home: opts.home, json: opts.json });
     } catch (err) {
@@ -76,7 +77,7 @@ proxy
   .command('start')
   .description('Start the proxy (in-process cache for MVP)')
   .option('-p, --port <port>', 'port to listen on', (v) => parseInt(v, 10))
-  .action(async (opts: { port?: number }) => {
+  .action(async (opts) => {
     try {
       await proxyStartCommand(opts);
     } catch (err) {
