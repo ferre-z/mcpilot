@@ -1,0 +1,28 @@
+{
+  "name": "mcpilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Take control of your MCP stack — manage, monitor, and optimize all your MCP servers from one place",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "scan": "tsx packages/cli/src/index.ts scan",
+    "list": "tsx packages/cli/src/index.ts list",
+    "stats": "tsx packages/cli/src/index.ts stats",
+    "dashboard": "tsx packages/cli/src/index.ts dashboard",
+    "proxy": "tsx packages/cli/src/index.ts proxy start",
+    "dev:dashboard": "npm --workspace=@mcpilot/dashboard run dev",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
