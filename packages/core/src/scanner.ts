@@ -93,7 +93,7 @@ function normalizeServer(
   }
   // Also pick up env references baked into the command line, e.g. `${GITHUB_TOKEN}`.
   const combined = `${entry.command ?? ''} ${(entry.args ?? []).join(' ')}`;
-  const envRefs = combined.matchAll(/\$\{?([A-Z_][A-Z0-9_]*)\}?/g);
+  const envRefs = Array.from(combined.matchAll(/\$\{?([A-Z_][A-Z0-9_]*)\}?/g));
   for (const m of envRefs) {
     if (!env[m[1]!]) env[m[1]!] = '<redacted>';
   }

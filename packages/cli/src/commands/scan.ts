@@ -57,13 +57,16 @@ export async function scanCommand(opts: ScanOptions = {}): Promise<void> {
     totalTokens += s.totalTokens;
     totalTools += s.tools.length;
     const pct = contextWindow > 0 ? (s.totalTokens / contextWindow) * 100 : 0;
+    const bar = s.status === 'connected'
+      ? c.dim('█'.repeat(Math.min(20, Math.max(0, Math.round(pct * 4)))) + '░'.repeat(Math.max(0, 20 - Math.round(pct * 4))))
+      : c.dim('─'.repeat(20));
     table.push([
       s.server.name,
       appLabel(s.server.sourceApp),
       s.server.transport,
       String(s.tools.length || '—'),
       `${fmtTokens(s.totalTokens)} ${c.dim(`(${fmtPct(pct)})`)}`,
-      c.dim(s.status === 'connected' ? '████░░░░░░' : '──────────'),
+      bar,
     ]);
   }
   // Bottom row: total

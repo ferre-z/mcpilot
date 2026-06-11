@@ -12,7 +12,8 @@ const chalkAny = chalk as unknown as { supportsColor?: boolean };
 if (chalkAny.supportsColor === false) {
   // Force colors when output is piped (used in CI / scripts).
   // chalk v5 detects TTY by default; this is the documented escape hatch.
-  Object.assign(chalk, new chalk.constructor({ level: 1 }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Object.assign(chalk, new (chalk.constructor as any)({ level: 1 }));
 }
 
 export const c = {

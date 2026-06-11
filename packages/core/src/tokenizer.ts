@@ -9,12 +9,12 @@
  * That matches what an LLM actually sees in its system prompt.
  */
 
-import { get_encoding, type Tiktoken } from 'js-tiktoken';
+import { getEncoding, type Tiktoken } from 'js-tiktoken';
 import type { McpServerConfig, McpTool } from './types.js';
 
 let cachedEncoder: Tiktoken | null = null;
 function encoder(): Tiktoken {
-  if (!cachedEncoder) cachedEncoder = get_encoding('cl100k_base');
+  if (!cachedEncoder) cachedEncoder = getEncoding('cl100k_base');
   return cachedEncoder;
 }
 
@@ -144,8 +144,10 @@ export async function tokenizeServer(
   }
 
   type AnyTransport = { close: () => Promise<void> };
-  let transport: AnyTransport | null = null;
-  let client: { listTools: () => Promise<{ tools: Array<{ name: string; description?: string; inputSchema?: Record<string, unknown> }> }>; close: () => Promise<void> } | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let transport: any = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let client: any = null;
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -195,7 +197,7 @@ export async function tokenizeServer(
       ),
     ]);
 
-    const tools: McpTool[] = (listed.tools ?? []).map((t) => {
+    const tools: McpTool[] = (listed.tools ?? []).map((t: { name: string; description?: string; inputSchema?: Record<string, unknown> }) => {
       const description = t.description ?? '';
       const inputSchema = (t.inputSchema ?? {}) as Record<string, unknown>;
       return {
