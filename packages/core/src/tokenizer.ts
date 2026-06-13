@@ -56,6 +56,8 @@ export interface TokenizeOptions {
   contextWindow?: number;
   /** Per-server connection timeout in ms. Defaults to 5_000. */
   timeoutMs?: number;
+  /** Skip live connection and just return empty stats. */
+  skipConnect?: boolean;
 }
 
 export interface TokenizeResult {
@@ -93,6 +95,9 @@ export async function tokenizeServer(
 ): Promise<TokenizeResult> {
   if (!server.enabled) {
     return { ...emptyStats(server, opts.contextWindow), status: 'disabled' };
+  }
+  if (opts.skipConnect) {
+    return emptyStats(server, opts.contextWindow);
   }
   if (server.transport === 'stdio' && !server.command) {
     return {

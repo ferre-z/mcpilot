@@ -18,6 +18,7 @@ export async function scanCommand(opts: ScanOptions = {}): Promise<void> {
 
   const snapshot = await buildSnapshot({
     scan: { cwd: opts.cwd, home: opts.home },
+    tokenize: { skipConnect: true },
   });
   const { scan, stats } = snapshot;
 
