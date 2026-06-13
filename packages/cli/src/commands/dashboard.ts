@@ -16,8 +16,7 @@ export interface DashboardOptions {
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const repoRoot = resolve(__dirname, '..', '..', '..');
-const dashboardDir = resolve(repoRoot, 'packages', 'dashboard');
+const dashboardDir = resolve(__dirname, '..', '..', '..', 'dashboard');
 
 export async function dashboardCommand(opts: DashboardOptions = {}): Promise<void> {
   const port = opts.port ?? 3000;
@@ -30,6 +29,7 @@ export async function dashboardCommand(opts: DashboardOptions = {}): Promise<voi
   const child = spawn('npm', ['run', 'dev', '--', '--port', String(port)], {
     cwd: dashboardDir,
     stdio: 'inherit',
+    shell: true,
     env: { ...process.env, MCPILOT_PORT: String(port) },
   });
 
