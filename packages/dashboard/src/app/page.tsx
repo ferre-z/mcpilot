@@ -5,6 +5,7 @@ import { ServerCard } from '@/components/ServerCard';
 import { SavingsCounter } from '@/components/SavingsCounter';
 import { TokenChart } from '@/components/TokenChart';
 import { ToolList } from '@/components/ToolList';
+import { TelemetryFeed } from '@/components/TelemetryFeed';
 import type { StatsResult } from '@mcpilot/core';
 
 interface ApiResponse {
@@ -88,6 +89,10 @@ export default function HomePage() {
               <section className="mt-10">
                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted">Top tools by token cost</h2>
                 <ToolList stats={data.stats} />
+              </section>
+
+              <section className="mt-10">
+                <TelemetryFeed />
               </section>
 
               <footer className="mt-12 border-t border-border pt-6 text-xs text-muted">

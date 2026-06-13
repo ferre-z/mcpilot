@@ -12,7 +12,7 @@ import { c } from './utils/output.js';
 import { scanCommand } from './commands/scan.js';
 import { listCommand } from './commands/list.js';
 import { statsCommand } from './commands/stats.js';
-import { proxyStartCommand } from './commands/proxy.js';
+import { proxyStartCommand, proxyRunCommand } from './commands/proxy.js';
 import { dashboardCommand } from './commands/dashboard.js';
 
 const program = new Command();
@@ -82,6 +82,21 @@ proxy
       await proxyStartCommand(opts);
     } catch (err) {
       console.error(c.red(`proxy failed: ${(err as Error).message}`));
+      process.exitCode = 1;
+    }
+  });
+
+proxy
+  .command('run')
+  .description('Run a transparent stdio proxy wrapper for a specific server')
+  .requiredOption('-s, --server <name>', 'name of the MCP server to wrap')
+  .option('--cwd <path>', 'working directory to scan for config', process.cwd())
+  .option('--home <path>', 'override $HOME for the scanner')
+  .action(async (opts) => {
+    try {
+      await proxyRunCommand(opts);
+    } catch (err) {
+      console.error(c.red(`proxy run failed: ${(err as Error).message}`));
       process.exitCode = 1;
     }
   });

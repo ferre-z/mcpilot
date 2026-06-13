@@ -28,3 +28,5 @@ export {
   sharedCache,
   truncateTools,
 } from './proxy.js';
+export { logInvocation, getInvocations } from './telemetry.js';
+
